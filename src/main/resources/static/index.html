@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Railway Ticket System</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>Railway Tickets</h1>
+    <ul>
+        <li v-for="ticket in tickets" :key="ticket.id">{{ ticket.seatNumber }} - {{ ticket.price }}</li>
+    </ul>
+    <button @click="fetchTickets">Get Tickets</button>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                tickets: []
+            };
+        },
+        methods: {
+            fetchTickets() {
+                axios.get('/tickets')
+                    .then(response => {
+                        this.tickets = response.data;
+                    });
+            }
+        }
+    });
+    app.mount('#app');
+</script>
+</body>
+</html>
